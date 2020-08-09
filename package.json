@@ -1,0 +1,37 @@
+{
+  "name": "p5.plot",
+  "version": "0.0.1",
+  "description": "A 2D and 3D graphing library for p5.js",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.cjs",
+    "test": "mocha-chrome test/test.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickmcintyre/p5.plot.git"
+  },
+  "keywords": [
+    "p5",
+    "plot",
+    "graph",
+    "math"
+  ],
+  "author": "Nick McIntyre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nickmcintyre/p5.plot/issues"
+  },
+  "homepage": "https://github.com/nickmcintyre/p5.plot#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
+    "mocha-chrome": "^2.2.0",
+    "p5": "^1.1.9",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "p5.tex": "github:nickmcintyre/p5.TeX"
+  }
+}
