@@ -1,4 +1,9 @@
-describe('p5.plot', function () {
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable func-names */
+/* eslint-disable new-cap */
+/* eslint-disable no-undef */
+/* eslint-disable prefer-arrow-callback */
+describe('wildflower', function () {
   let pInst;
 
   beforeEach(function () {
@@ -9,9 +14,9 @@ describe('p5.plot', function () {
     pInst.remove();
   });
 
-  describe('Library smoke test', function () {
-    it('Should exist', function () {
-      expect(plt).to.be.an.instanceOf(Object);
+  describe('createPlot()', function () {
+    it('Should be a function', function () {
+      expect(pInst.createPlot).to.be.an.instanceOf(Function);
     });
   });
 });

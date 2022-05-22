@@ -1,37 +1,39 @@
 {
-  "name": "p5.plot",
+  "name": "wildflower",
   "version": "0.0.1",
-  "description": "A 2D and 3D graphing library for p5.js",
+  "description": "A grammar of graphics for p5.js",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.cjs",
-    "test": "mocha-chrome test/test.html"
+    "build": "webpack --config webpack.config.js",
+    "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nickmcintyre/p5.plot.git"
+    "url": "git+https://github.com/nickmcintyre/wildflower.git"
   },
   "keywords": [
     "p5",
     "plot",
     "graph",
-    "math"
+    "grammar of graphics"
   ],
   "author": "Nick McIntyre",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nickmcintyre/p5.plot/issues"
+    "url": "https://github.com/nickmcintyre/wildflower/issues"
   },
-  "homepage": "https://github.com/nickmcintyre/p5.plot#readme",
+  "homepage": "https://github.com/nickmcintyre/wildflower#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.1.1",
-    "mocha-chrome": "^2.2.0",
-    "p5": "^1.1.9",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {
-    "p5.tex": "github:nickmcintyre/p5.TeX"
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "karma": "^6.3.19",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.1",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^10.0.0",
+    "p5": "^1.4.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }

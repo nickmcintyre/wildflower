@@ -1,4 +1,5 @@
-# p5.plot
-> A 2D and 3D graphing library for p5.js
+# wildflower
+![wildflower](wildflower.png)
+> A grammar of graphics for p5.js
 
-[![Build Status](https://travis-ci.com/nickmcintyre/p5.plot.svg?branch=master)](https://travis-ci.com/nickmcintyre/p5.plot)
+[![Build Status](https://app.travis-ci.com/nickmcintyre/wildflower.svg?branch=main)](https://app.travis-ci.com/nickmcintyre/wildflower)

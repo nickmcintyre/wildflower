@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   mode: 'production',
@@ -6,7 +6,9 @@ module.exports = {
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'p5.plot.js',
-    library: 'plt',
+    filename: 'wildflower.js',
+  },
+  externals: {
+    p5: 'p5',
   },
 };
