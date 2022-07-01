@@ -13,10 +13,10 @@ function setup() {
 
 function draw() {
   plot.title('Iris sepals')
+  plot.xlabel('Width')
+  plot.ylabel('Height')
   plot.point({
     x: 'SepalWidth',
     y: 'SepalLength',
-    size: 5,
-    color: 'Species',
   })
 }

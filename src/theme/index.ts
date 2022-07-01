@@ -1,15 +1,17 @@
 export const annotations = {
   default: {
-    fontColor: 'white',
-    axesColor: 'white',
-    gridColor: 'darkgray',
-    backgroundColor: '#222',
+    fontColor: 'black',
+    axesColor: 'black',
+    gridColor: 'white',
+    backgroundColor: 'gainsboro',
   },
 };
 
 // Palettes borrowed from the seaborn library
 // https://github.com/seaborn/seaborn/blob/master/seaborn/palettes.py
 export const layers = {
+  default: ['#0173B2', '#DE8F05', '#029E73', '#D55E00', '#CC78BC',
+    '#CA9161', '#FBAFE4', '#949494', '#ECE133', '#56B4E9'],
   deep: ['#4C72B0', '#DD8452', '#55A868', '#C44E52', '#8172B3',
     '#937860', '#DA8BC3', '#8C8C8C', '#CCB974', '#64B5CD'],
   muted: ['#4878D0', '#EE854A', '#6ACC64', '#D65F5F', '#956CB4',

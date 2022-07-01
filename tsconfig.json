@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node"
+  },
+  "exclude": ["examples/*", "test/*"],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs"
+  }
+}

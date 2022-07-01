@@ -1,20 +1,21 @@
 import { scaleXContinuous, scaleYContinuous } from '../scale';
+import { Props } from '../utils';
 
-const drawXAxis = (props) => {
+const drawXAxis = (props: Props) => {
   const {
     pg,
-    x,
-    y,
+    originX,
+    originY,
     width,
     majorTicks,
     minorTicks,
     tickSize,
-    axesColor,
+    annotaionsPalette,
   } = props;
   pg.push();
-  pg.stroke(axesColor);
+  pg.stroke(annotaionsPalette.axesColor);
   pg.strokeWeight(1);
-  pg.translate(x, y);
+  pg.translate(originX, originY);
   pg.line(0, 0, width, 0);
   const { numXTicks, dx } = scaleXContinuous({
     width,
@@ -22,8 +23,8 @@ const drawXAxis = (props) => {
     minorTicks,
   });
   for (let i = 0; i <= numXTicks; i += 1) {
-    const tickX = dx * (i + 1);
-    let tickY;
+    const tickX: number = dx * (i + 1);
+    let tickY: number;
     if (i % (minorTicks + 1) === 0) {
       tickY = 2 * tickSize;
     } else {
@@ -34,21 +35,21 @@ const drawXAxis = (props) => {
   pg.pop();
 };
 
-const drawYAxis = (props) => {
+const drawYAxis = (props: Props): void => {
   const {
     pg,
-    x,
-    y,
+    originX,
+    originY,
     height,
     majorTicks,
     minorTicks,
     tickSize,
-    axesColor,
+    annotaionsPalette,
   } = props;
   pg.push();
-  pg.stroke(axesColor);
+  pg.stroke(annotaionsPalette.axesColor);
   pg.strokeWeight(1);
-  pg.translate(x, y);
+  pg.translate(originX, originY);
   pg.line(0, 0, 0, -height);
   const { numYTicks, dy } = scaleYContinuous({
     height,
@@ -56,8 +57,8 @@ const drawYAxis = (props) => {
     minorTicks,
   });
   for (let i = 0; i <= numYTicks; i += 1) {
-    const tickY = -dy * (i + 1);
-    let tickX;
+    const tickY: number = -dy * (i + 1);
+    let tickX: number;
     if (i % (minorTicks + 1) === 0) {
       tickX = 2 * tickSize;
     } else {
@@ -68,7 +69,7 @@ const drawYAxis = (props) => {
   pg.pop();
 };
 
-export default (props) => {
+export default (props: Props) => {
   drawXAxis(props);
   drawYAxis(props);
 };

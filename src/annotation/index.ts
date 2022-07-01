@@ -1,10 +1,12 @@
+import drawBackground from './background';
 import {
   drawTitle,
   drawXLabel,
   drawYLabel,
-} from './labels';
+} from './label';
 
 export {
+  drawBackground,
   drawTitle,
   drawXLabel,
   drawYLabel,
