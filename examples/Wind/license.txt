@@ -1,0 +1,2 @@
+Data provided by the National Renewable Energy Laboratory (NREL).
+http://maps.nrel.gov/wind-prospector

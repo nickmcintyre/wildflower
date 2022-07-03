@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as _p5 from 'p5';
 import { Props, defaultProps } from './utils';
-import { pointGeom } from './geom';
+import { pointGeom, lineGeom } from './geom';
 import { drawAxes, drawGrid } from './guide';
 import { inferTypes } from './utils'
 import {
@@ -89,6 +89,11 @@ class Plot {
   point(props?: Props): void {
     this.props = { ...this.props, ...props };
     this.layers.push({ props: this.props, operation: pointGeom });
+  }
+
+  line(props?: Props): void {
+    this.props = { ...this.props, ...props };
+    this.layers.push({ props: this.props, operation: lineGeom });
   }
 }
 

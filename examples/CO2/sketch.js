@@ -9,9 +9,9 @@ function setup() {
 }
 
 function draw() {
-  plot.title('Atmospheric CO2 at Mauna Loa Observatory')
+  plot.title('Atmospheric Carbon Dioxide at Mauna Loa Observatory')
   plot.xlabel('Year')
   plot.ylabel('CO2 Concentration (ppm)')
-
+  plot.line({ x: 'year', y: 'co2' })
   plot.point({ x: 'year', y: 'co2' })
 }
