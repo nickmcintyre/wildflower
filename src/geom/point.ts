@@ -13,22 +13,14 @@ export default (props: Props) => {
     originY,
     width,
     height,
-    majorTicks,
-    minorTicks,
     layersPalette,
   } = props;
   pg.push();
   pg.translate(originX, originY);
-  const { dx } = scaleXContinuous({
-    width,
-    majorTicks,
-    minorTicks,
-  });
-  const { dy } = scaleYContinuous({
-    height,
-    majorTicks,
-    minorTicks,
-  });
+  const xTicks: number[] = scaleXContinuous(props);
+  const yTicks: number[] = scaleYContinuous(props);
+  const dx = xTicks[1] - xTicks[0];
+  const dy = yTicks[1] - yTicks[0];
   pg.translate(dx, -dy);
   pg.noStroke();
   pg.fill(layersPalette[0]);

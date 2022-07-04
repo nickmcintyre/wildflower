@@ -6,12 +6,13 @@ function setup() {
   createCanvas(400, 400)
 
   plot = createPlot({ year, co2 })
+  plot.configure({ majorTicks: 4 })
 }
 
 function draw() {
   plot.title('Atmospheric Carbon Dioxide at Mauna Loa Observatory')
   plot.xlabel('Year')
-  plot.ylabel('CO2 Concentration (ppm)')
-  plot.line({ x: 'year', y: 'co2' })
+  plot.ylabel('CO2 (ppm)')
+  plot.line({ x: 'year', y: 'co2'  })
   plot.point({ x: 'year', y: 'co2' })
 }

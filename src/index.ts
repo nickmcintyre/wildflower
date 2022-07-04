@@ -8,7 +8,9 @@ import {
   drawBackground,
   drawTitle,
   drawXLabel,
+  drawXTickLabels,
   drawYLabel,
+  drawYTickLabels,
 } from './annotation';
 
 declare const p5: any;
@@ -32,6 +34,10 @@ class Plot {
     this.wrangle();
   }
 
+  configure(props: Props) {
+    this.props = { ...this.props, ...props };
+  }
+
   wrangle(): void {
     if (this.props.dataset.raw.data instanceof _p5.Table) {
       inferTypes(this.props.dataset.raw.data);
@@ -45,6 +51,8 @@ class Plot {
     this.ylabel();
     this.gridLines();
     this.axes();
+    this.xticks();
+    this.yticks();
   }
 
   render(): void {
@@ -79,6 +87,16 @@ class Plot {
   axes(props?: Props) {
     this.props = { ...this.props, ...props };
     drawAxes(this.props);
+  }
+
+  xticks(props?: Props) {
+    this.props = { ...this.props, ...props };
+    drawXTickLabels(this.props);
+  }
+
+  yticks(props?: Props) {
+    this.props = { ...this.props, ...props };
+    drawYTickLabels(this.props);
   }
 
   background(color?: any) {
