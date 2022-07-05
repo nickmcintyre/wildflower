@@ -10,11 +10,11 @@ const drawXAxis = (props: Props) => {
     originX,
     originY,
     width,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.axesColor);
-  pg.strokeWeight(1);
+  pg.stroke(annotationsPalette.axesColor);
+  pg.strokeWeight(annotationsPalette.axesWeight);
   pg.translate(originX, originY);
   pg.line(0, 0, width, 0);
   pg.pop();
@@ -27,11 +27,11 @@ const drawXTicks = (props: Props): void => {
     originY,
     minorTicks,
     tickSize,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.axesColor);
-  pg.strokeWeight(1);
+  pg.stroke(annotationsPalette.axesColor);
+  pg.strokeWeight(annotationsPalette.axesWeight);
   pg.translate(originX, originY);
   const xTicks: number[] = scaleXContinuous(props);
   for (let i = 0; i < xTicks.length; i += 1) {
@@ -53,11 +53,11 @@ const drawYAxis = (props: Props): void => {
     originX,
     originY,
     height,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.axesColor);
-  pg.strokeWeight(1);
+  pg.stroke(annotationsPalette.axesColor);
+  pg.strokeWeight(annotationsPalette.axesWeight);
   pg.translate(originX, originY);
   pg.line(0, 0, 0, -height);
   pg.pop();
@@ -70,11 +70,11 @@ const drawYTicks = (props: Props): void => {
     originY,
     minorTicks,
     tickSize,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.axesColor);
-  pg.strokeWeight(1);
+  pg.stroke(annotationsPalette.axesColor);
+  pg.strokeWeight(annotationsPalette.axesWeight);
   pg.translate(originX, originY);
   const yTicks: number[] = scaleYContinuous(props);
   for (let i = 0; i < yTicks.length; i += 1) {

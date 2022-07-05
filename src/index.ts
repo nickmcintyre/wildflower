@@ -6,6 +6,7 @@ import { drawAxes, drawGrid } from './guide';
 import { inferTypes } from './utils'
 import {
   drawBackground,
+  drawMargin,
   drawTitle,
   drawXLabel,
   drawXTickLabels,
@@ -45,6 +46,7 @@ class Plot {
   }
 
   annotations(): void {
+    this.margin();
     this.background();
     this.title();
     this.xlabel();
@@ -100,8 +102,15 @@ class Plot {
   }
 
   background(color?: any) {
-    this.props.backgroundColor = color || this.props.backgroundColor;
+    this.props.annotationsPalette.backgroundColor = color
+      || this.props.annotationsPalette.backgroundColor;
     drawBackground(this.props);
+  }
+
+  margin(color?: any) {
+    this.props.annotationsPalette.marginColor = color
+      || this.props.annotationsPalette.marginColor;
+    drawMargin(this.props);
   }
 
   point(props?: Props): void {

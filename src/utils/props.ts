@@ -27,7 +27,6 @@ export interface Props {
   width?: number;
   height?: number;
   size?: number;
-  backgroundColor?: p5.Color;
   majorTicks?: number;
   minorTicks?: number;
   tickSize?: number;
@@ -36,7 +35,7 @@ export interface Props {
   yLabel?: string;
   padding?: Padding;
   layersPalette?: any;
-  annotaionsPalette?: any;
+  annotationsPalette?: any;
 }
 
 const PAD: number = 50;
@@ -61,5 +60,5 @@ export const defaultProps = (pInst: p5, raw: any): Props => ({
   minorTicks: 4,
   tickSize: 4,
   layersPalette: layers.default,
-  annotaionsPalette: annotations.default,
+  annotationsPalette: annotations.default,
 });

@@ -6,6 +6,7 @@ import {
   drawYLabel,
   drawYTickLabels,
 } from './label';
+import drawMargin from './margin';
 
 export {
   drawBackground,
@@ -14,4 +15,5 @@ export {
   drawXTickLabels,
   drawYLabel,
   drawYTickLabels,
+  drawMargin,
 };

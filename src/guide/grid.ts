@@ -8,10 +8,10 @@ const drawXGrid = (props: Props): void => {
     originY,
     height,
     minorTicks,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.gridColor);
+  pg.stroke(annotationsPalette.gridColor);
   pg.strokeWeight(1);
   pg.translate(originX, originY);
   const xTicks: number[] = scaleXContinuous(props);
@@ -31,10 +31,10 @@ const drawYGrid = (props: Props): void => {
     originY,
     width,
     minorTicks,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.stroke(annotaionsPalette.gridColor);
+  pg.stroke(annotationsPalette.gridColor);
   pg.strokeWeight(1);
   pg.translate(originX, originY);
   const yTicks: number[] = scaleYContinuous(props);

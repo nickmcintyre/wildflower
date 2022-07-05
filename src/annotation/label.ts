@@ -11,10 +11,10 @@ const drawTitle = (props: Props): void => {
     pg,
     padding,
     title,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.fill(annotaionsPalette.fontColor);
+  pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.translate(padding.left, padding.top - pg.textSize());
   pg.text(title, 0, 0);
@@ -28,10 +28,10 @@ const drawXLabel = (props: Props): void => {
     originY,
     width,
     xLabel,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.fill(annotaionsPalette.fontColor);
+  pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.translate(originX + width / 2, originY + 3 * pg.textSize());
   pg.textAlign(CENTER, CENTER);
@@ -47,11 +47,11 @@ const drawYLabel = (props: Props): void => {
     originY,
     height,
     yLabel,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   const textSize: number = pg.textSize();
   pg.push();
-  pg.fill(annotaionsPalette.fontColor);
+  pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.translate(originX - 3 * textSize, originY - height / 2);
   pg.rotate(1.5 * PI);
@@ -73,10 +73,10 @@ const drawXTickLabels = (props: Props): void => {
     majorTicks,
     minorTicks,
     tickSize,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.fill(annotaionsPalette.fontColor);
+  pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.textAlign(pg.CENTER, pg.CENTER);
   pg.translate(originX, originY);
@@ -111,10 +111,10 @@ const drawYTickLabels = (props: Props): void => {
     majorTicks,
     minorTicks,
     tickSize,
-    annotaionsPalette,
+    annotationsPalette,
   } = props;
   pg.push();
-  pg.fill(annotaionsPalette.fontColor);
+  pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.textAlign(pg.CENTER, pg.CENTER);
   pg.translate(originX, originY);
