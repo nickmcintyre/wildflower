@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as p5 from 'p5';
-import { SortedData } from '../data';
+import { BinnedData, SortedData } from '../data';
 import { linspace, scaleXContinuous, scaleYContinuous } from '../scale';
-import { Props } from '../utils';
+import { Props, Range, range } from '../utils';
 
 const { CENTER, ITALIC, PI } = p5.prototype;
 
@@ -69,7 +69,6 @@ const drawXTickLabels = (props: Props): void => {
     y,
     originX,
     originY,
-    width,
     majorTicks,
     minorTicks,
     tickSize,
@@ -80,7 +79,7 @@ const drawXTickLabels = (props: Props): void => {
   pg.noStroke();
   pg.textAlign(pg.CENTER, pg.CENTER);
   pg.translate(originX, originY);
-  const sorted: SortedData = dataset.get(x, y);
+  const sorted: SortedData = dataset.getSorted(x, y);
   const { xRange } = sorted;
   const xCoord: number[] = scaleXContinuous(props);
   const xLabel: number[] = linspace(xRange.min, xRange.max, majorTicks + 1);
@@ -100,6 +99,44 @@ const drawXTickLabels = (props: Props): void => {
   pg.pop();
 };
 
+// const drawYTickLabels = (props: Props): void => {
+//   const {
+//     pg,
+//     dataset,
+//     x,
+//     y,
+//     originX,
+//     originY,
+//     majorTicks,
+//     minorTicks,
+//     tickSize,
+//     annotationsPalette,
+//   } = props;
+//   pg.push();
+//   pg.fill(annotationsPalette.fontColor);
+//   pg.noStroke();
+//   pg.textAlign(pg.CENTER, pg.CENTER);
+//   pg.translate(originX, originY);
+//   const sorted: SortedData = dataset.getSorted(x, y);
+//   const { yRange } = sorted;
+//   const yCoord: number[] = scaleYContinuous(props);
+//   const yLabel: number[] = linspace(yRange.min, yRange.max, majorTicks + 1);
+//   const xCoord: number = -5 * tickSize;
+//   for (let i = 0; i < yCoord.length; i += 1) {
+//     if (i % (minorTicks + 1) === 0) {
+//       let label: string;
+//       const n: number = yLabel.shift();
+//       if (n > 100) {
+//         label = `${pg.round(n, 0)}`;
+//       } else {
+//         label = `${pg.round(n, 1)}`;
+//       }
+//       pg.text(label, xCoord, -yCoord[i]);
+//     }
+//   }
+//   pg.pop();
+// };
+
 const drawYTickLabels = (props: Props): void => {
   const {
     pg,
@@ -112,14 +149,21 @@ const drawYTickLabels = (props: Props): void => {
     minorTicks,
     tickSize,
     annotationsPalette,
+    numBins,
   } = props;
   pg.push();
   pg.fill(annotationsPalette.fontColor);
   pg.noStroke();
   pg.textAlign(pg.CENTER, pg.CENTER);
   pg.translate(originX, originY);
-  const sorted: SortedData = dataset.get(x, y);
-  const { yRange } = sorted;
+  let yRange: Range;
+  if (numBins > 0) {
+    const binned: BinnedData = dataset.getBinned(x, numBins);
+    yRange = binned.xRange;
+  } else {
+    const sorted: SortedData = dataset.getSorted(x, y);
+    yRange = sorted.yRange;
+  }
   const yCoord: number[] = scaleYContinuous(props);
   const yLabel: number[] = linspace(yRange.min, yRange.max, majorTicks + 1);
   const xCoord: number = -5 * tickSize;

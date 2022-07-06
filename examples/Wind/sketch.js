@@ -1,19 +1,49 @@
 let wind
-let plot
+let timeSeries
+let barChart
 
 function preload() {
   wind = loadTable('wind.csv', 'csv', 'header')
 }
 
 function setup() {
-  createCanvas(400, 400)
-  plot = createPlot(wind)
+  createCanvas(900, 500)
+
+  timeSeries = createPlot(wind)
+  timeSeries.size(900, 250)
+
+  barChart = createPlot(wind)
+  barChart.size(900, 250)
+  barChart.position(0, 250)
 }
 
 function draw() {
-  plot.title('Galveston offshore wind speed at 100m')
-  plot.xlabel('Hour of Year')
-  plot.ylabel('Wind Speed (m/s)')
+  timeSeries.title('2008 Galveston offshore wind speed at 100m')
+  timeSeries.xlabel('Hour of Year')
+  timeSeries.ylabel('Wind Speed (m/s)')
+  timeSeries.line({ x: 'Hour', y: 'Speed' })
+  timeSeries.render()
 
-  plot.line({ x: 'Hour', y: 'Speed' })
+  barChart.title('Wind speed distribution')
+  barChart.xlabel('Wind Speed (m/s)')
+  barChart.ylabel('Number of Hours')
+  barChart.bar({ x: 'Speed' })
+  barChart.render()
+
+  hurricane(600, 30)
+}
+
+function hurricane(x, y) {
+  push()
+  translate(x, y)
+  stroke('red')
+  strokeWeight(5)
+  fill('white')
+  let r = 10
+  circle(0, 0, 2 * r)
+  let angle = -frameCount / 10
+  rotate(angle)
+  line(0, -r, 1.5 * r, -r)
+  line(0, r, -1.5 * r, r)
+  pop()
 }

@@ -36,6 +36,7 @@ export interface Props {
   padding?: Padding;
   layersPalette?: any;
   annotationsPalette?: any;
+  numBins?: number;
 }
 
 const PAD: number = 50;
@@ -61,4 +62,5 @@ export const defaultProps = (pInst: p5, raw: any): Props => ({
   tickSize: 4,
   layersPalette: layers.default,
   annotationsPalette: annotations.default,
+  numBins: undefined,
 });

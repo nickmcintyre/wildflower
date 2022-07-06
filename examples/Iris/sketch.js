@@ -19,4 +19,5 @@ function draw() {
     x: 'SepalWidth',
     y: 'SepalLength',
   })
+  plot.render()
 }

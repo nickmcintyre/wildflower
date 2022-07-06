@@ -14,5 +14,5 @@ function draw() {
   plot.xlabel('Year')
   plot.ylabel('CO2 (ppm)')
   plot.line({ x: 'year', y: 'co2'  })
-  plot.point({ x: 'year', y: 'co2' })
+  plot.render()
 }

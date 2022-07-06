@@ -1,7 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as _p5 from 'p5';
 import { Props, defaultProps } from './utils';
-import { pointGeom, lineGeom } from './geom';
+import {
+  barGeom,
+  pointGeom,
+  lineGeom,
+} from './geom';
 import { drawAxes, drawGrid } from './guide';
 import { inferTypes } from './utils'
 import {
@@ -28,11 +32,14 @@ class Plot {
 
   layers: Layer[];
 
+  isDynamic: boolean;
+
   constructor(pInst: _p5, raw: any) {
     this.pInst = pInst;
     this.props = defaultProps(pInst, raw);
     this.layers = [];
     this.wrangle();
+    this.isDynamic = false;
   }
 
   configure(props: Props) {
@@ -60,6 +67,12 @@ class Plot {
   render(): void {
     this.annotations();
     this.layers.forEach((layer: Layer) => layer.operation(layer.props));
+    const {
+      pg,
+      plotX,
+      plotY,
+    } = this.props;
+    this.pInst.image(pg, plotX, plotY, pg.width, pg.height);
   }
 
   clear(): void {
@@ -79,6 +92,19 @@ class Plot {
   ylabel(label?: string) {
     this.props.yLabel = label || this.props.yLabel;
     drawYLabel(this.props);
+  }
+
+  size(width: number, height: number) {
+    this.props.pg.width = width;
+    this.props.pg.height = height;
+    this.props.width = width - this.props.padding.left - this.props.padding.right;
+    this.props.height = height - this.props.padding.top - this.props.padding.bottom;
+    this.props.originY = height - this.props.padding.bottom;
+  }
+
+  position(x: number, y: number) {
+    this.props.plotX = x;
+    this.props.plotY = y;
   }
 
   gridLines(props?: Props) {
@@ -113,6 +139,12 @@ class Plot {
     drawMargin(this.props);
   }
 
+  bar(props?: Props): void {
+    this.props = { ...this.props, ...props };
+    this.props.numBins = this.props.numBins || 20;
+    this.layers.push({ props: this.props, operation: barGeom });
+  }
+
   point(props?: Props): void {
     this.props = { ...this.props, ...props };
     this.layers.push({ props: this.props, operation: pointGeom });
@@ -140,13 +172,6 @@ p5.prototype.createPlot = function _createPlot(data: any): Plot {
 p5.prototype.registerMethod('post', function _drawPlots() {
   // eslint-disable-next-line no-underscore-dangle
   this._plots.forEach((plot: Plot) => {
-    const {
-      pg,
-      plotX,
-      plotY,
-    } = plot.props;
-    plot.render();
-    this.image(pg, plotX, plotY, pg.width, pg.height);
     plot.clear();
   });
 });

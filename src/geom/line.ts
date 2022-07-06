@@ -22,7 +22,7 @@ export default (props: Props) => {
   const dy: number = yTicks[1] - yTicks[0];
   pg.translate(dx, -dy);
   pg.stroke(layersPalette[0]);
-  const sorted: SortedData = dataset.get(x, y);
+  const sorted: SortedData = dataset.getSorted(x, y);
   const { data, xRange, yRange } = sorted;
   for (let i = 0; i < data.x.length - 1; i += 1) {
     const x1 = pg.map(data.x[i], xRange.min, xRange.max, 0, width - 2 * dx);

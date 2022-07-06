@@ -24,7 +24,7 @@ export default (props: Props) => {
   pg.translate(dx, -dy);
   pg.noStroke();
   pg.fill(layersPalette[0]);
-  const sorted: SortedData = dataset.get(x, y);
+  const sorted: SortedData = dataset.getSorted(x, y);
   const { data, xRange, yRange } = sorted;
   for (let i = 0; i < data.x.length; i += 1) {
     const tx = pg.map(data.x[i], xRange.min, xRange.max, 0, width - 2 * dx);
