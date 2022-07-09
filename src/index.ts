@@ -1,13 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as _p5 from 'p5';
-import { Props, defaultProps } from './utils';
-import {
-  barGeom,
-  pointGeom,
-  lineGeom,
-} from './geom';
-import { drawAxes, drawGrid } from './guide';
-import { inferTypes } from './utils'
 import {
   drawBackground,
   drawMargin,
@@ -17,6 +9,18 @@ import {
   drawYLabel,
   drawYTickLabels,
 } from './annotation';
+import { Dataset } from './data';
+import {
+  barGeom,
+  pointGeom,
+  lineGeom,
+} from './geom';
+import { drawAxes, drawGrid } from './guide';
+import {
+  Props,
+  defaultProps,
+  inferTypes,
+} from './utils';
 
 declare const p5: any;
 
@@ -28,18 +32,18 @@ interface Layer {
 class Plot {
   pInst: _p5;
 
+  raw: any;
+
   props: Props;
 
   layers: Layer[];
 
-  isDynamic: boolean;
-
   constructor(pInst: _p5, raw: any) {
     this.pInst = pInst;
+    this.raw = raw;
     this.props = defaultProps(pInst, raw);
     this.layers = [];
     this.wrangle();
-    this.isDynamic = false;
   }
 
   configure(props: Props) {
@@ -65,6 +69,9 @@ class Plot {
   }
 
   render(): void {
+    if (this.props.isDynamic) {
+      this.props.dataset = new Dataset(this.raw);
+    }
     this.annotations();
     this.layers.forEach((layer: Layer) => layer.operation(layer.props));
     const {

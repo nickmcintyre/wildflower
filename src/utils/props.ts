@@ -18,6 +18,7 @@ interface Padding {
 export interface Props {
   pg?: p5.Graphics;
   dataset?: Dataset;
+  isDynamic?: boolean;
   x?: string;
   y?: string;
   plotX?: number;
@@ -44,6 +45,7 @@ const PAD: number = 50;
 export const defaultProps = (pInst: p5, raw: any): Props => ({
   pg: pInst.createGraphics(pInst.width, pInst.height),
   dataset: new Dataset(raw),
+  isDynamic: false,
   plotX: 0,
   plotY: 0,
   size: 5,
