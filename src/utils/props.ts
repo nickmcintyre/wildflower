@@ -38,6 +38,9 @@ export interface Props {
   layersPalette?: any;
   annotationsPalette?: any;
   numBins?: number;
+  timeColumns?: string[];
+  xRange?: Range;
+  yRange?: Range;
 }
 
 const PAD: number = 50;

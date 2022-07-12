@@ -3,34 +3,43 @@ let timeSeries;
 let barChart;
 
 function preload() {
-  wind = loadTable('wind.csv', 'csv', 'header');
+  wind = loadTable('wind/2008.csv', 'csv', 'header');
 }
 
 function setup() {
   createCanvas(900, 500);
 
+  wind.parseDates('Time');
+  wind.inferTypes();
   timeSeries = createPlot(wind);
   timeSeries.size(900, 250);
 
   barChart = createPlot(wind);
   barChart.size(900, 250);
   barChart.position(0, 250);
+
+  const description = `The first plot shows a noisy time series of wind speed
+  with a clear spike. The second plot shows a right-skewed distribution of wind
+  speed. A pair of hurricane symbols rotate, one above the time series' spike and
+  the other above the distribution's tail.`;
+  describe(description);
 }
 
 function draw() {
   timeSeries.title('2008 Galveston offshore wind speed at 100m');
-  timeSeries.xlabel('Hour of Year');
-  timeSeries.ylabel('Wind Speed (m/s)');
-  timeSeries.line({ x: 'Hour', y: 'Speed' });
+  timeSeries.xlabel('Date');
+  timeSeries.ylabel('Wind speed (m/s)');
+  timeSeries.line({ x: 'Time', y: 'Speed' });
   timeSeries.render();
 
-  barChart.title('Wind speed distribution');
-  barChart.xlabel('Wind Speed (m/s)');
+  barChart.title('Distribution of speed');
+  barChart.xlabel('Wind speed (m/s)');
   barChart.ylabel('Number of Hours');
   barChart.bar({ x: 'Speed' });
   barChart.render();
 
   hurricane(600, 30);
+  hurricane(750, 415);
 }
 
 function hurricane(x, y) {

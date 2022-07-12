@@ -1,12 +1,15 @@
 let plot;
 const battery = {
-  capacity: 20,
+  ah: 100,
+  v: 12,
+  capacity: 100 * 12,
   maxdod: 0.8,
+  cRate: 20,
   hour: [0],
-  wh: [10],
+  wh: [240],
 };
 let hr = 0;
-let angle = 0;
+let fanAngle = 0;
 let fanEnergy = 0;
 let solarEnergy = 0;
 const button = {
@@ -20,8 +23,15 @@ function setup() {
 
   plot = createPlot(battery);
   plot.size(width, height / 2);
-  plot.configure({ isDynamic: true });
-  plot.position(0, 200);
+  const props = {
+    isDynamic: true,
+    yRange: {
+      min: 0,
+      max: battery.capacity,
+    },
+  };
+  plot.configure(props);
+  plot.position(0, height / 2);
 
   frameRate(12);
 
@@ -48,11 +58,11 @@ function draw() {
 
 function update() {
   // supply
-  solarEnergy = random(3, 6);
+  solarEnergy = random(100, 300);
   // demand
   const { x, y, r } = button;
   if (mouseIsPressed && dist(x, y, mouseX, mouseY) < r) {
-    fanEnergy = 5;
+    fanEnergy = 200;
   } else {
     fanEnergy = 0;
   }
@@ -63,20 +73,21 @@ function update() {
     battery.hour.shift();
     battery.wh.shift();
   }
+  // time
+  hr += 1;
 }
 
 function drawSky() {
   // sky
   background('dodgerblue');
   // sun
-  const gold = color('gold');
-  fill(gold);
+  fill('gold');
   noStroke();
   circle(80, 30, 50);
   // cloud
-  const a = 70 - map(solarEnergy, 3, 6, 0, 20);
+  const a = 70 - map(solarEnergy, 100, 300, 0, 20);
   fill(255, a);
-  ellipse(80, 42, 100, 30);
+  ellipse(80, 45, 100, 30);
 }
 
 function drawGround() {
@@ -115,7 +126,7 @@ function drawBattery() {
 function drawFan() {
   push();
   const angleSpeed = fanEnergy * 0.1;
-  angle += angleSpeed;
+  fanAngle += angleSpeed;
   translate(320, 90);
   // frame
   fill('black');
@@ -129,7 +140,7 @@ function drawFan() {
   circle(0, 0, 100);
   const last = battery.wh.length - 1;
   if (battery.wh[last] > (1 - battery.maxdod) * battery.capacity) {
-    rotate(angle);
+    rotate(fanAngle);
   }
   // blades
   noStroke();
@@ -198,19 +209,22 @@ function drawCircuit() {
 }
 
 function runCircuit() {
+  // add time step
   battery.hour.push(hr);
   battery.wh.push(0);
   const last = battery.wh.length - 1;
+  // compute supply and demand
+  const maxCharge = battery.capacity / battery.cRate;
   if (solarEnergy > fanEnergy) {
-    const space = battery.capacity - battery.wh[last - 1];
-    const supply = min(solarEnergy - fanEnergy, space);
+    let supply = solarEnergy - fanEnergy;
+    supply = constrain(supply, 0, maxCharge);
     battery.wh[last] = battery.wh[last - 1] + supply;
+    battery.wh[last] = constrain(battery.wh[last], 0, battery.capacity);
   } else {
     let demand = fanEnergy - solarEnergy;
     let supply = battery.wh[last - 1] - (1 - battery.maxdod) * battery.capacity;
-    supply = constrain(supply, 0, battery.maxdod * battery.capacity);
-    demand = min(supply, demand)
+    supply = constrain(supply, 0, maxCharge);
+    demand = min(supply, demand);
     battery.wh[last] = battery.wh[last - 1] - demand;
   }
-  hr += 1;
 }

@@ -8,6 +8,7 @@ import {
   drawXTickLabels,
   drawYLabel,
   drawYTickLabels,
+  drawXDateLabels,
 } from './annotation';
 import { Dataset } from './data';
 import {
@@ -16,10 +17,10 @@ import {
   lineGeom,
 } from './geom';
 import { drawAxes, drawGrid } from './guide';
+import './table';
 import {
   Props,
   defaultProps,
-  inferTypes,
 } from './utils';
 
 declare const p5: any;
@@ -43,29 +44,24 @@ class Plot {
     this.raw = raw;
     this.props = defaultProps(pInst, raw);
     this.layers = [];
-    this.wrangle();
   }
 
   configure(props: Props) {
     this.props = { ...this.props, ...props };
   }
 
-  wrangle(): void {
-    if (this.props.dataset.raw.data instanceof _p5.Table) {
-      inferTypes(this.props.dataset.raw.data);
-    }
-  }
-
   annotations(): void {
-    this.margin();
-    this.background();
-    this.title();
-    this.xlabel();
-    this.ylabel();
-    this.gridLines();
+    // adding to the front of this.layers[]
     this.axes();
-    this.xticks();
-    this.yticks();
+    this.gridLines();
+    this.ylabel();
+    this.xlabel();
+    this.title();
+    this.background();
+    this.margin();
+    // adding to end of this.layers[]
+    // this.yticks();
+    // this.xticks();
   }
 
   render(): void {
@@ -73,12 +69,14 @@ class Plot {
       this.props.dataset = new Dataset(this.raw);
     }
     this.annotations();
-    this.layers.forEach((layer: Layer) => layer.operation(layer.props));
+    this.layers.forEach((layer: Layer) => layer.operation(this.props));
     const {
       pg,
       plotX,
       plotY,
     } = this.props;
+    this.yticks();
+    this.xticks();
     this.pInst.image(pg, plotX, plotY, pg.width, pg.height);
   }
 
@@ -88,17 +86,17 @@ class Plot {
 
   title(title?: string) {
     this.props.title = title || this.props.title;
-    drawTitle(this.props);
+    this.layers.unshift({ props: this.props, operation: drawTitle });
   }
 
   xlabel(label?: string) {
     this.props.xLabel = label || this.props.xLabel;
-    drawXLabel(this.props);
+    this.layers.unshift({ props: this.props, operation: drawXLabel });
   }
 
   ylabel(label?: string) {
     this.props.yLabel = label || this.props.yLabel;
-    drawYLabel(this.props);
+    this.layers.unshift({ props: this.props, operation: drawYLabel });
   }
 
   size(width: number, height: number) {
@@ -116,34 +114,41 @@ class Plot {
 
   gridLines(props?: Props) {
     this.props = { ...this.props, ...props };
-    drawGrid(this.props);
+    this.layers.unshift({ props: this.props, operation: drawGrid });
   }
 
   axes(props?: Props) {
     this.props = { ...this.props, ...props };
-    drawAxes(this.props);
+    this.layers.unshift({ props: this.props, operation: drawAxes });
   }
 
   xticks(props?: Props) {
     this.props = { ...this.props, ...props };
-    drawXTickLabels(this.props);
+    if (this.props.dataset.raw.time.includes(this.props.x)) {
+      // this.layers.push({ props: this.props, operation: drawXDateLabels });
+      drawXDateLabels(this.props);
+    } else {
+      // this.layers.push({ props: this.props, operation: drawXTickLabels });
+      drawXTickLabels(this.props);
+    }
   }
 
   yticks(props?: Props) {
     this.props = { ...this.props, ...props };
+    // this.layers.push({ props: this.props, operation: drawYTickLabels });
     drawYTickLabels(this.props);
   }
 
   background(color?: any) {
     this.props.annotationsPalette.backgroundColor = color
       || this.props.annotationsPalette.backgroundColor;
-    drawBackground(this.props);
+    this.layers.unshift({ props: this.props, operation: drawBackground });
   }
 
   margin(color?: any) {
     this.props.annotationsPalette.marginColor = color
       || this.props.annotationsPalette.marginColor;
-    drawMargin(this.props);
+    this.layers.unshift({ props: this.props, operation: drawMargin });
   }
 
   bar(props?: Props): void {
